@@ -1,0 +1,174 @@
+{% extends "index.html" %}
+{% load staticfiles %}
+{% load sonautils %}
+
+{% block title %}
+Images {{object.name}} ({{now}})
+{% endblock title %}
+
+{% block extra_head %}
+    {{ block.super }}
+    <link rel="stylesheet" href="{% static 'css/gallerySONA.css'%}">
+    <link rel="stylesheet" href="{% static 'css/scrollPane.css'%}">
+    <link rel="stylesheet" href="{% static 'css/showAzimut.css'%}">
+{% endblock extra_head %}
+
+{% block menu %}
+  {% include "_menu.html" with active_camera_slug=object.slug active_images=1 %}
+{% endblock menu %}
+
+{% block body %}
+
+<div class="panel panel-primary fullHeight ">
+    <div class="panel-heading">
+        <div class="row">
+            <div class='col-xs-4 col-sm-4 col-md-4 col-lg-4' id="galleryPpal_head"></div> <!-- Fecha de la imagen -->
+            <div class='col-xs-4 col-sm-4 col-md-4 col-lg-4' id="galleryPpal_lastUpdate"></div> <!-- Hora de la ultima actualizacion -->
+            <div class='col-xs-4 col-sm-4 col-md-4 col-lg-4'  id="galleryPpal_options"> <!-- Botones -->
+                <button class='btn pull-right' style="margin-right: 5px;" id='moveImgSlow' onclick='moveThumb("#galleryPpal", 600)'><i class="glyphicon glyphicon-play"></i></button>
+                <button class='btn pull-right' style="margin-right: 5px;" id='moveImgFast' onclick='moveThumb("#galleryPpal", 50)'><i class="glyphicon glyphicon-forward"></i></button>
+                <button class='btn pull-right' style="margin-right: 5px;" id='moveImgFull' onclick='viewFull("galleryPpal")'><i class="glyphicon glyphicon-resize-full"></i></button>
+                <button class='btn pull-right' style="margin-right: 5px;" id='showAzimut'><i class="fa fa-compass"></i></button>
+            </div>
+        </div>
+    </div>
+    <div class="panel-body fullHeight">
+        <div class="fullHeight" id="galleryPpal">
+                <div class='row' id='allThumb'>
+                    <div id='prevThumb'>
+                        <img src='//png-1.findicons.com/files/icons/66/ethereal/72/back.png' class='prevThumb' alt='Previous'/>
+                    </div>
+                    <script type="text/html" id="thumb_template">
+                        <table class='classThumb' data-template-bind='[{"attribute": "data-index", "value": "id"}]'>
+                            <tr><td align='center' data-content="time">??:??:??</td></tr>
+                            <tr><td><img data-src='src' data-id='imgid' class='img-responsive imgThumb' width=128 height=126 /></td></tr>
+                        </table>
+                    </script>
+                    <div id='thumbnailDiv' class='scroll-pane' style=' overflow-x:visible; overflow-y:hidden; white-space: nowrap;'>
+                        <!-- no poner nada aqui porque se borra -->
+                    </div>
+                    <div id='nextThumb'>
+                        <img src='//png-1.findicons.com/files/icons/66/ethereal/72/forward.png' class='nextThumb' alt='Next'/>
+                    </div>
+                    <div id="checkImages">
+                        <input type="radio" name="imagesCheck" value="both" />Both
+                        <input type="radio" name="imagesCheck" value="original" checked="checked" />Original
+                        <input type="radio" name="imagesCheck" value="analized" />Analized
+                    </div>
+                </div>
+                <div class='row fullHeight ' id='imageDiv'>
+                    <div class='loadingDiv'><img src='{% static 'img/loadingBlack.gif' %}' class='imgLoading'/></div>
+                    <div class="calibration">
+                        <img src='{% static 'img/sona_blanca.jpg' %}' id="originalImg" class='imgGallery'/>
+                    </div>
+                    <img src='{% static 'img/sona_blanca.jpg' %}' id="analizedImg" class='imgGallery imgHide'/>
+                    <div id='imageInfo2' class="sensitiveDiv">
+                        Image captured: <span class="fecha">??/??/??</span><br/>
+                        Cloudiness(%): <span class="cloud_cover">??.??</span><br/>
+                        Int. temperature: <span class="temperature">??.??</span> &deg;C<br/>
+                        Solar position<br>
+                        &nbsp;&nbsp;-Elevation: <span class="elevation">??.??</span>&deg;<br/>
+                        &nbsp;&nbsp;-Azimuth: <span class="azimuth">??.??</span>&deg;<br/>
+                        &nbsp;&nbsp;-Blocked: <span class="blocked">???</span><br/>
+                        Dust: <span class="dust">???</span><br/>
+                        Image number <span class="numimg">?</span> of <span class='numImages'>?</span>
+                    </div>
+                </div>
+                <div>
+                    <!--
+                    Download
+                    <a href="{% url 'json' object.slug now.year now.month now.day %}">json</a>
+                    <a href="{% url 'csv' object.slug now.year now.month now.day %}">csv</a>
+                    -->
+                    <table>
+                        <tr>
+                            <td>
+                                <form action="{% url_slug_yyyymmdd 'json' object.slug now %}">
+                                    <button title="View data" class="glyphicon glyphicon-eye-open" />
+                                </form>
+                            </td>
+                            <td>
+                                <form action="{% url_slug_yyyymmdd 'csv' object.slug now %}">
+                                    <button title="Download data" class="glyphicon glyphicon-save" />
+                                </form>
+                            </td>
+                            <td>Minimum sampling for images: {% if object.data.gui.min_sampling_images %}{{object.data.gui.min_sampling_images}}{% else %}Not configured, default 300{% endif %} seconds.</td>
+                        </tr>
+                    </table>
+                    </div>
+        </div>
+    </div>  
+</div>  
+{% endblock body %}
+
+{% block extra_footer %}
+{{block.super}}
+<script src="{% static 'js/jquery.loadTemplate-1.4.4.min.js' %}"></script>
+<script src="//code.jquery.com/jquery-migrate-1.2.1.js"></script> <!-- Traer a local -->
+<script src="{% static 'js/scrollPane.js' %}"></script>
+<script src="{% static 'js/mousewheel.js' %}"></script>
+<script src="{% static 'js/gallerySONA.js' %}"></script>
+<script>
+    
+    var rotation = 0;
+    var imagesFrom = "{% url 'jsonv' object.slug now.year now.month now.day %}?step={{object.data.gui.min_sampling_images|default:300}}&amp;";
+    
+    $(document).ready(function(){
+        var interval;
+        $("#galleryPpal").createGallery();
+        $.getJSON(imagesFrom, function(jsonData) {
+            $("#galleryPpal").newImages(jsonData,"image", "thumbnail");
+        }).fail(function( jqxhr, textStatus, error ) {
+            console.log( "Request Failed: " + error + "from " + imagesFrom);
+            $(".loadingDiv").hide();
+            $("#originalImg").attr("src", "/static/img/cameraNotFound.png");
+            $("#analizedImg").attr("src", "/static/img/cameraNotFound.png");
+        }).success(function(){
+            $("#imageDiv").find(".imgGallery").load(function(){
+                clearInterval(interval);
+                interval = setInterval(function() { 
+                    var urlJSON = imagesFrom + 'last=' + ($('#galleryPpal').getLastDateImage());
+                    $('#galleryPpal').appendImages(urlJSON);              
+                } ,10000);
+            });
+        });
+
+        jQuery.fn.rotate = function(degrees) {
+            $(this).css({'-webkit-transform' : 'rotate('+ degrees +'deg)',
+                         '-moz-transform' : 'rotate('+ degrees +'deg)',
+                         '-ms-transform' : 'rotate('+ degrees +'deg)',
+                         'transform' : 'rotate('+ degrees +'deg)'});
+            return $(this);
+        };
+
+        jQuery.fn.rotateTo = function(degrees) {
+            $(this).rotate(-rotation);
+            rotation = 90-degrees;
+            $(this).rotate(rotation);
+            return $(this);
+        };
+
+        $("#showAzimut").click(function() {
+            if ((azimut != null) && ($('input:radio[name=imagesCheck]:checked').val() == "original")) {
+                // Si existe linea la ocultamos
+                if (!$(".fake-line").length) {
+                    $(".calibration").append("<div class='fake-line'><div class='right-fake'></div></div>");
+
+                    scale_factor = $("#originalImg").width() / {{ object.data.algorithm.image_width }};
+                    top_offset = (parseFloat($(".fake-line").css('top')) + ({{ object.data.algorithm.y_offset }} * scale_factor)) + "px";
+                    left_offset = {{ object.data.algorithm.x_offset }} * scale_factor;
+
+                    $(".fake-line").offset({ top: top_offset, left: left_offset })
+                    $(".fake-line").rotateTo(azimut);
+                    $(".fake-line").show();
+                }
+                else {
+                    $(".fake-line").rotateTo(0);
+                    $(".fake-line").remove();
+                }
+            }
+        });
+    });
+
+</script>
+{% endblock extra_footer %}
