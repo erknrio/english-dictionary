@@ -1,5 +1,7 @@
-# I1
+# English Dictionary
+English dictionary for students.
 
+# Intermediate 1 (I1)
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.4.7.
 
 ## Development server
