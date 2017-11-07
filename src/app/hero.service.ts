@@ -5,6 +5,8 @@ import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
 import { catchError, map, tap } from 'rxjs/operators';
 
+import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
+
 import { Hero } from './hero';
 import { MessageService } from './message.service';
 
@@ -14,20 +16,15 @@ const httpOptions = {
 
 @Injectable()
 export class HeroService {
-
   private heroesUrl = 'api/heroes';  // URL to web api
 
   constructor(
-    private http: HttpClient,
+    private afs: AngularFirestore,
     private messageService: MessageService) { }
 
-  /** GET heroes from the server */
+  /** GET heroes from firestore */
   getHeroes (): Observable<Hero[]> {
-    return this.http.get<Hero[]>(this.heroesUrl)
-      .pipe(
-        tap(heroes => this.log(`fetched heroes`)),
-        catchError(this.handleError('getHeroes', []))
-      );
+    return this.afs.collection('heroes').valueChanges();
   }
 
   /** GET hero by id. Return `undefined` when id not found */
