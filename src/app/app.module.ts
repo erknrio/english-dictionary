@@ -20,31 +20,9 @@ import { HeroSearchComponent }  from './hero-search/hero-search.component';
 import { HeroService }          from './hero.service';
 import { MessageService }       from './message.service';
 import { MessagesComponent }    from './messages/messages.component';
-import { FirestoreComponent }      from './firestore/firestore.component';
-
-/*
-firebase.initializeApp({
-    apiKey: '### FIREBASE API KEY ###',
-    authDomain: '### FIREBASE AUTH DOMAIN ###',
-    projectId: '### CLOUD FIRESTORE PROJECT ID ###'
-  });
-
-  firebase.firestore().settings({
-    // Enable offline support
-    persistence: true
-  });
-
-  // Initialize Cloud Firestore through firebase
-  var db = firebase.firestore();
- */
-const firebaseConfig = {
-  apiKey: "AIzaSyCdYWDFPoIR5J3sIbCfalFhRlbtkAHeF5E",
-  authDomain: "english-vocabulary-i1.firebaseapp.com",
-  databaseURL: "https://english-vocabulary-i1.firebaseio.com",
-  projectId: "english-vocabulary-i1",
-  storageBucket: "english-vocabulary-i1.appspot.com",
-  messagingSenderId: "355478072730"
-};
+import { FirestoreComponent }   from './firestore/firestore.component';
+// Custom
+import { firebaseConfig }       from './custom-settings'
 
 @NgModule({
   imports: [

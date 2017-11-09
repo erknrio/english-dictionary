@@ -16,20 +16,23 @@ const httpOptions = {
 
 @Injectable()
 export class HeroService {
+  private collectionName = 'heroes';
   private heroesUrl = 'api/heroes';  // URL to web api
 
   constructor(
+    private http: HttpClient,
     private afs: AngularFirestore,
     private messageService: MessageService) { }
 
   /** GET heroes from firestore */
   getHeroes (): Observable<Hero[]> {
-    return this.afs.collection('heroes').valueChanges();
+    return this.afs.collection(this.collectionName).valueChanges();
   }
 
   /** GET hero by id. Return `undefined` when id not found */
   getHeroNo404<Data>(id: number): Observable<Hero> {
     const url = `${this.heroesUrl}/?id=${id}`;
+    // return this.afs.collection('heroes').valueChanges();
     return this.http.get<Hero[]>(url)
       .pipe(
         map(heroes => heroes[0]), // returns a {0|1} element array
@@ -66,10 +69,13 @@ export class HeroService {
 
   /** POST: add a new hero to the server */
   addHero (hero: Hero): Observable<Hero> {
-    return this.http.post<Hero>(this.heroesUrl, hero, httpOptions).pipe(
-      tap((hero: Hero) => this.log(`added hero w/ id=${hero.id}`)),
-      catchError(this.handleError<Hero>('addHero'))
-    );
+    // FIXME Obtener el ultimo id de la coleccion de heroes
+    // this.afs.collection(collectionName).add({'id': this.id, 'name': this.name});
+    this.afs.collection(this.collectionName).add(hero);
+    // return this.http.post<Hero>(this.heroesUrl, hero, httpOptions).pipe(
+    //   tap((hero: Hero) => this.log(`added hero w/ id=${hero.id}`)),
+    //   catchError(this.handleError<Hero>('addHero'))
+    // );
   }
 
   /** DELETE: delete the hero from the server */
