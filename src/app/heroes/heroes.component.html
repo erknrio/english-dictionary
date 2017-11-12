@@ -1,16 +1,18 @@
 <h2>My Heroes</h2>
-
 <div>
-  <label>Hero name:
-    {# <input type="text" name="last-id" value="hero.id">#}
-    <input #heroName />
-  </label>
-  <!-- (click) passes input value to add() and then clears the input -->
-  <button (click)="add(heroName.value); heroName.value=''">
-    add
-  </button>
+  <form #heroForm="ngForm" (ngSubmit)="add(heroForm); heroForm.reset()">
+    <div class="form-group">
+      <label for="name">Name</label>
+      <input type="text" class="form-control" id="name" [(ngModel)]="model.name" name="name" #name="ngModel" required />
+      <div [hidden]="name.valid || name.pristine"
+        class="alert alert-danger">
+        Name is required
+      </div>
+    </div>
+    <button type="submit" class="btn btn-success" [disabled]="!heroForm.form.valid">Submit</button>
+    <button type="reset" class="btn btn-warning">Clear</button>
+  </form>
 </div>
-
 <ul class="heroes">
   <li *ngFor="let hero of heroes">
     <a routerLink="/detail/{{hero.id}}">
@@ -20,8 +22,6 @@
     (click)="delete(hero)">x</button>
   </li>
 </ul>
-
-
 <!--
 Copyright 2017 Google Inc. All Rights Reserved.
 Use of this source code is governed by an MIT-style license that

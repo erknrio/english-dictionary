@@ -26,7 +26,8 @@ export class HeroService {
 
   /** GET heroes from firestore */
   getHeroes (): Observable<Hero[]> {
-    return this.afs.collection(this.collectionName).valueChanges();
+    var heroesCollection:any = this.afs.collection(this.collectionName, ref => ref.orderBy("id"));
+    return heroesCollection.valueChanges();
   }
 
   /** GET hero by id. Return `undefined` when id not found */
@@ -68,14 +69,15 @@ export class HeroService {
   //////// Save methods //////////
 
   /** POST: add a new hero to the server */
-  addHero (hero: Hero): Observable<Hero> {
-    // FIXME Obtener el ultimo id de la coleccion de heroes
-    // this.afs.collection(collectionName).add({'id': this.id, 'name': this.name});
-    this.afs.collection(this.collectionName).add(hero);
-    // return this.http.post<Hero>(this.heroesUrl, hero, httpOptions).pipe(
-    //   tap((hero: Hero) => this.log(`added hero w/ id=${hero.id}`)),
-    //   catchError(this.handleError<Hero>('addHero'))
-    // );
+  addHero (hero: Hero, lastId: number): Observable<Hero> {
+    this.afs.collection(this.collectionName).add({'id': lastId + 1, 'name': hero.name})
+    .then(function(docRef) {
+      console.log("Document written with ID: ", docRef.id);
+    })
+    .catch(function(error) {
+      console.error("Error adding document: ", error);
+    });
+    return;
   }
 
   /** DELETE: delete the hero from the server */
