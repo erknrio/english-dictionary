@@ -9,7 +9,7 @@ import { FirestoreComponent }      from './firestore/firestore.component';
 const routes: Routes = [
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
   { path: 'dashboard',  component: DashboardComponent },
-  { path: 'detail/:id', component: HeroDetailComponent },
+  { path: 'detail/:documentId', component: HeroDetailComponent },
   { path: 'heroes',     component: HeroesComponent },
   { path: 'firestore',     component: FirestoreComponent}
 ];

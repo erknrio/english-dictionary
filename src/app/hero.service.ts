@@ -27,7 +27,17 @@ export class HeroService {
   /** GET heroes from firestore */
   getHeroes (): Observable<Hero[]> {
     var heroesCollection:any = this.afs.collection(this.collectionName, ref => ref.orderBy("id"));
-    return heroesCollection.valueChanges();
+    // return heroesCollection.valueChanges();
+
+    return heroesCollection.snapshotChanges()
+    .map(actions => {
+      return actions.map(a => {
+        const data = a.payload.doc.data() as Hero
+        const documentId = a.payload.doc.id;
+
+        return { documentId, data };
+      });
+    });
   }
 
   /** GET hero by id. Return `undefined` when id not found */
@@ -46,12 +56,33 @@ export class HeroService {
   }
 
   /** GET hero by id. Will 404 if id not found */
-  getHero(id: number): Observable<Hero> {
-    const url = `${this.heroesUrl}/${id}`;
-    return this.http.get<Hero>(url).pipe(
-      tap(_ => this.log(`fetched hero id=${id}`)),
-      catchError(this.handleError<Hero>(`getHero id=${id}`))
-    );
+  getHero(documentId: string): Observable<Hero> {
+    var heroesCollection:any = this.afs.doc(this.collectionName + '/' + documentId);
+    // console.log(heroesCollection)
+    // console.log("GET")
+    // console.log(heroesCollection.get().then(doc => doc.data()))
+    // return heroesCollection.get();
+//     var heroesCollection:any = this.afs.collection(this.collectionName, ref => ref.where("documentId", "==", documentId));
+    return heroesCollection.valueChanges();
+// console.log(heroesCollection.valueChanges())
+//     return heroesCollection.snapshotChanges()
+//     .map(actions => {
+//       return actions.map(a => {
+//         const data = a.payload.doc.data() as Hero
+//         const documentId = a.payload.doc.id;
+//         console.log(documentId)
+//         return { documentId, data };
+//       });
+//     });
+    // return heroesCollection.snapshotChanges()
+    // .map(actions => {
+    //   return actions.map(a => {
+    //     const data = a.payload.doc.data() as Hero
+    //     const documentId = a.payload.doc.id;
+    //
+    //     return { documentId, data };
+    //   });
+    // });
   }
 
   /* GET heroes whose name contains search term */
@@ -82,21 +113,24 @@ export class HeroService {
 
   /** DELETE: delete the hero from the server */
   deleteHero (hero: Hero | number): Observable<Hero> {
-    const id = typeof hero === 'number' ? hero : hero.id;
-    const url = `${this.heroesUrl}/${id}`;
+    this.afs.doc('heroes/' + hero.documentId).delete();
 
-    return this.http.delete<Hero>(url, httpOptions).pipe(
-      tap(_ => this.log(`deleted hero id=${id}`)),
-      catchError(this.handleError<Hero>('deleteHero'))
-    );
+    // const id = typeof hero === 'number' ? hero : hero.id;
+    // const url = `${this.heroesUrl}/${id}`;
+    //
+    // return this.http.delete<Hero>(url, httpOptions).pipe(
+    //   tap(_ => this.log(`deleted hero id=${id}`)),
+    //   catchError(this.handleError<Hero>('deleteHero'))
+    // );
   }
 
   /** PUT: update the hero on the server */
-  updateHero (hero: Hero): Observable<any> {
-    return this.http.put(this.heroesUrl, hero, httpOptions).pipe(
-      tap(_ => this.log(`updated hero id=${hero.id}`)),
-      catchError(this.handleError<any>('updateHero'))
-    );
+  updateHero (hero: Hero, documentId): Observable<any> {
+    this.afs.collection(this.collectionName).doc(documentId).update(hero)
+    // return this.http.put(this.heroesUrl, hero, httpOptions).pipe(
+    //   tap(_ => this.log(`updated hero id=${hero.id}`)),
+    //   catchError(this.handleError<any>('updateHero'))
+    // );
   }
 
   /**
