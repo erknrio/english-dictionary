@@ -58,31 +58,7 @@ export class HeroService {
   /** GET hero by id. Will 404 if id not found */
   getHero(documentId: string): Observable<Hero> {
     var heroesCollection:any = this.afs.doc(this.collectionName + '/' + documentId);
-    // console.log(heroesCollection)
-    // console.log("GET")
-    // console.log(heroesCollection.get().then(doc => doc.data()))
-    // return heroesCollection.get();
-//     var heroesCollection:any = this.afs.collection(this.collectionName, ref => ref.where("documentId", "==", documentId));
     return heroesCollection.valueChanges();
-// console.log(heroesCollection.valueChanges())
-//     return heroesCollection.snapshotChanges()
-//     .map(actions => {
-//       return actions.map(a => {
-//         const data = a.payload.doc.data() as Hero
-//         const documentId = a.payload.doc.id;
-//         console.log(documentId)
-//         return { documentId, data };
-//       });
-//     });
-    // return heroesCollection.snapshotChanges()
-    // .map(actions => {
-    //   return actions.map(a => {
-    //     const data = a.payload.doc.data() as Hero
-    //     const documentId = a.payload.doc.id;
-    //
-    //     return { documentId, data };
-    //   });
-    // });
   }
 
   /* GET heroes whose name contains search term */
@@ -112,8 +88,9 @@ export class HeroService {
   }
 
   /** DELETE: delete the hero from the server */
-  deleteHero (hero: Hero | number): Observable<Hero> {
+  deleteHero (hero: Hero): Observable<Hero> {
     this.afs.doc('heroes/' + hero.documentId).delete();
+    return null;
 
     // const id = typeof hero === 'number' ? hero : hero.id;
     // const url = `${this.heroesUrl}/${id}`;
@@ -127,6 +104,7 @@ export class HeroService {
   /** PUT: update the hero on the server */
   updateHero (hero: Hero, documentId): Observable<any> {
     this.afs.collection(this.collectionName).doc(documentId).update(hero)
+    return null;
     // return this.http.put(this.heroesUrl, hero, httpOptions).pipe(
     //   tap(_ => this.log(`updated hero id=${hero.id}`)),
     //   catchError(this.handleError<any>('updateHero'))
