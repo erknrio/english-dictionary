@@ -16,10 +16,15 @@ export class WordsComponent implements OnInit {
   submitted = false;
   private id: number;
   private word: string;
+  private categories: any;
 
-  constructor(private wordService: WordService) { }
+  constructor(
+    private wordService: WordService,
+    private collectionCategoriesName = 'categories',
+  ) {}
   ngOnInit() {
     this.getWords();
+    this.getCategories();
   }
 
   getWords(): void {
@@ -27,12 +32,26 @@ export class WordsComponent implements OnInit {
     .subscribe(words => this.words = words);
   }
 
+  getCategories(): void {
+    this.wordService.getCategories()
+    .subscribe(categories => this.categories = categories);
+    //console.log
+    //categories => this.categories = categories
+  }
+
   add(submitedForm: NgForm): void {
-    var name = submitedForm.form.value.name.trim(),
+    console.log(submitedForm.form.value);
+    var dataSend = {
+      "english": submitedForm.form.value.english.trim(),
+      "spanish": submitedForm.form.value.spanish.trim(),
+      "spanishPronunciation": submitedForm.form.value.spanishPronunciation.trim(),
+      "phonetic": submitedForm.form.value.phonetic.trim(),
+      "category": this.collectionCategoriesName + "/" + submitedForm.form.value.category.trim(),
+    },
     wordId = 0;
     this.submitted = true;
 
-    if (!name) { return; }
+    if (!dataSend.english) { return null; }
 
     if (this.words[this.words.length -1].hasOwnProperty("data")) {
       wordId = this.words[this.words.length -1].data.id;
@@ -40,11 +59,11 @@ export class WordsComponent implements OnInit {
       wordId = this.words[this.words.length -1].id;
     }
 
-    this.wordService.addWord({ name } as Word, wordId)
-      .subscribe(word => {
-        this.words.push(word);
-      });
-    submitedForm.reset();
+    // this.wordService.addWord(dataSend as Word, wordId)
+    //   .subscribe(word => {
+    //     this.words.push(word);
+    //   });
+    // submitedForm.reset();
   }
 
   delete(word: Word): void {

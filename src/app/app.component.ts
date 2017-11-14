@@ -18,5 +18,5 @@ import 'rxjs/add/operator/map';
 })
 
 export class AppComponent {
-  title = 'English Dictionjary Intermediate 1';
+  title = 'English Dictionary Intermediate 1';
 }

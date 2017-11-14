@@ -2,13 +2,31 @@
 <div>
   <form #wordForm="ngForm" (ngSubmit)="add(wordForm); wordForm.reset()">
     <div class="form-group">
-      <label for="name">Name</label>
-      <input type="text" class="form-control" id="name" [(ngModel)]="model.name" name="name" #name="ngModel" required />
-      <div [hidden]="name.valid || name.pristine"
+      <label for="name">English Word</label>
+      <input type="text" class="form-control" id="name" [(ngModel)]="model.english" name="english" #english="ngModel" required />
+      <div [hidden]="english.valid || english.pristine"
         class="alert alert-danger">
-        Name is required
+        English word is required
       </div>
     </div>
+      <div class="form-group">
+        <label for="name">Spanish Word</label>
+        <input type="text" class="form-control" id="spanish" [(ngModel)]="model.spanish" name="spanish" #spanish="ngModel" />
+      </div>
+      <div class="form-group">
+        <label for="name">Spanish Pronunciation</label>
+        <input type="text" class="form-control" id="spanish-pronunciation" [(ngModel)]="model.spanishPronunciation" name="spanishPronunciation" #spanishPronunciation="ngModel" />
+      </div>
+      <div class="form-group">
+        <label for="name">Phonetic</label>
+        <input type="text" class="form-control" id="phonetic" [(ngModel)]="model.phonetic" name="phonetic" #phonetic="ngModel" />
+      </div>
+      <div class="form-group">
+        <label for="name">Category</label>
+        <select class="form-control" id="category" [(ngModel)]="model.category" name="category">
+          <option *ngFor="let category of categories" [value]="category.documentId">{{category.data.name}}</option>
+        </select>
+      </div>
     <button type="submit" class="btn btn-success" [disabled]="!wordForm.form.valid">Submit</button>
     <button type="reset" class="btn btn-warning">Clear</button>
   </form>
@@ -16,14 +34,9 @@
 <ul class="words">
   <li *ngFor="let word of words">
     <a routerLink="/detail/{{word.documentId}}">
-      <span class="badge">{{word.data.id}}</span> {{word.data.name}}
+      <span class="badge">{{word.data.id}}</span> {{word.data.english}}
     </a>
     <button class="delete" title="delete word"
     (click)="delete(word)">x</button>
   </li>
 </ul>
-<!--
-Copyright 2017 Google Inc. All Rights Reserved.
-Use of this source code is governed by an MIT-style license that
-can be found in the LICENSE file at http://angular.io/license
--->

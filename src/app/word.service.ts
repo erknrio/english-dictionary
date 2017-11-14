@@ -7,11 +7,13 @@ import { catchError, map, tap } from 'rxjs/operators';
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
 
 import { Word } from './word';
+import { Category } from './category';
 import { MessageService } from './message.service';
 
 @Injectable()
 export class WordService {
-  private collectionName = 'words';
+  private collectionWordName = 'words';
+  private collectionCategoriesName = 'categories';
   private wordsUrl = 'api/words';  // URL to web api
 
   constructor(
@@ -20,7 +22,7 @@ export class WordService {
 
   /** GET words from firestore */
   getWords (): Observable<Word[]> {
-    var wordsCollection:any = this.afs.collection(this.collectionName, ref => ref.orderBy("id"));
+    var wordsCollection:any = this.afs.collection(this.collectionWordName, ref => ref.orderBy("id"));
     // Retrieve word data + documentid
     return wordsCollection.snapshotChanges()
     .map(actions => {
@@ -33,9 +35,24 @@ export class WordService {
     });
   }
 
+  /** GET categories from firestore */
+  getCategories (): Observable<Category[]> {
+    var wordsCollection:any = this.afs.collection(this.collectionCategoriesName, ref => ref.orderBy("name"));
+    // Retrieve word data + documentid
+    return wordsCollection.snapshotChanges()
+    .map(actions => {
+      return actions.map(a => {
+        const data = a.payload.doc.data() as Category
+        const documentId = a.payload.doc.id;
+
+        return { documentId, data };
+      });
+    });
+  }
+
   /** GET word by id. Will 404 if id not found */
   getWord(documentId: string): Observable<Word> {
-    var wordsCollection:any = this.afs.doc(this.collectionName + '/' + documentId);
+    var wordsCollection:any = this.afs.doc(this.collectionWordName + '/' + documentId);
     return wordsCollection.valueChanges();
   }
 
@@ -56,16 +73,19 @@ export class WordService {
 
   /** POST: add a new word to the server */
   addWord (word: Word, lastId: number): Observable<Word> {
-    var data: Word = {
-      'id': lastId + 1,
-      'english': word.english,
-      "spanish": word.spanish,
-      "spanishPronunciation": word.spanishPronunciation,
-      "phonetic": word.phonetic,
-      "category": word.category,
-    };
+    // var dataSend: Word = {
+    //   'id': lastId + 1,
+    //   'english': word.english,
+    //   "spanish": word.spanish,
+    //   "spanishPronunciation": word.spanishPronunciation,
+    //   "phonetic": word.phonetic,
+    //   "category": word.category,
+    // };
 
-    this.afs.collection(this.collectionName).add(data)
+    console.log(word);
+    // console.log(dataSend)
+
+    this.afs.collection(this.collectionWordName).add(word)
     .then(function(docRef) {
       console.log("Document written with ID: ", docRef.id);
     })
@@ -77,7 +97,7 @@ export class WordService {
 
   /** DELETE: delete the word from the server */
   deleteWord (word: Word): Observable<Word> {
-    this.afs.collection(this.collectionName).doc(word.documentId).delete()
+    this.afs.collection(this.collectionWordName).doc(word.documentId).delete()
     .then(function() {
       console.log("Word with ID: " + word.documentId + " deleted successful");
     })
@@ -89,7 +109,7 @@ export class WordService {
 
   /** PUT: update the word on the server */
   updateWord (word: Word, documentId): Observable<any> {
-    this.afs.collection(this.collectionName).doc(documentId).update(word)
+    this.afs.collection(this.collectionWordName).doc(documentId).update(word)
     .then(function() {
       console.log("Word updated successful");
     })
