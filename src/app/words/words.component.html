@@ -1,6 +1,6 @@
-<h2>My Heroes</h2>
+<h2>My Words</h2>
 <div>
-  <form #heroForm="ngForm" (ngSubmit)="add(heroForm); heroForm.reset()">
+  <form #wordForm="ngForm" (ngSubmit)="add(wordForm); wordForm.reset()">
     <div class="form-group">
       <label for="name">Name</label>
       <input type="text" class="form-control" id="name" [(ngModel)]="model.name" name="name" #name="ngModel" required />
@@ -9,17 +9,17 @@
         Name is required
       </div>
     </div>
-    <button type="submit" class="btn btn-success" [disabled]="!heroForm.form.valid">Submit</button>
+    <button type="submit" class="btn btn-success" [disabled]="!wordForm.form.valid">Submit</button>
     <button type="reset" class="btn btn-warning">Clear</button>
   </form>
 </div>
-<ul class="heroes">
-  <li *ngFor="let hero of heroes">
-    <a routerLink="/detail/{{hero.documentId}}">
-      <span class="badge">{{hero.data.id}}</span> {{hero.data.name}}
+<ul class="words">
+  <li *ngFor="let word of words">
+    <a routerLink="/detail/{{word.documentId}}">
+      <span class="badge">{{word.data.id}}</span> {{word.data.name}}
     </a>
-    <button class="delete" title="delete hero"
-    (click)="delete(hero)">x</button>
+    <button class="delete" title="delete word"
+    (click)="delete(word)">x</button>
   </li>
 </ul>
 <!--

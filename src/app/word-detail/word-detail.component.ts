@@ -2,34 +2,34 @@ import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 
-import { Hero }         from '../hero';
-import { HeroService }  from '../hero.service';
+import { Word }         from '../word';
+import { WordService }  from '../word.service';
 
 @Component({
-  selector: 'app-hero-detail',
-  templateUrl: './hero-detail.component.html',
-  styleUrls: [ './hero-detail.component.css' ]
+  selector: 'app-word-detail',
+  templateUrl: './word-detail.component.html',
+  styleUrls: [ './word-detail.component.css' ]
 })
-export class HeroDetailComponent implements OnInit {
-  @Input() hero: Hero;
+export class WordDetailComponent implements OnInit {
+  @Input() word: Word;
   private document:string;
-  private collectionName = 'heroes';
+  private collectionName = 'words';
 
   constructor(
     private route: ActivatedRoute,
-    private heroService: HeroService,
+    private wordService: WordService,
     private location: Location
   ) {}
 
   ngOnInit(): void {
-    this.getHero();
+    this.getWord();
   }
 
-  getHero(): void {
+  getWord(): void {
     const documentId = this.route.snapshot.params.documentId;
     this.document = documentId;
-    this.heroService.getHero(documentId)
-      .subscribe(hero => this.hero = hero);
+    this.wordService.getWord(documentId)
+      .subscribe(word => this.word = word);
   }
 
   goBack(): void {
@@ -37,7 +37,7 @@ export class HeroDetailComponent implements OnInit {
   }
 
  save(): void {
-    this.heroService.updateHero(this.hero, this.document)
+    this.wordService.updateWord(this.word, this.document)
     .subscribe(() => this.goBack());
   }
 }
