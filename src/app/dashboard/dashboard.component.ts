@@ -18,13 +18,6 @@ export class DashboardComponent implements OnInit {
 
   getWords(): void {
     this.wordService.getWords()
-      .subscribe(words => this.words = words.slice(1, 5));
+      .subscribe(words => this.words = words.slice(0, 4));
   }
 }
-
-
-/*
-Copyright 2017 Google Inc. All Rights Reserved.
-Use of this source code is governed by an MIT-style license that
-can be found in the LICENSE file at http://angular.io/license
-*/

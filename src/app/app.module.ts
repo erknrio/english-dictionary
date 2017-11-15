@@ -33,7 +33,7 @@ import { firebaseConfig }       from './custom-settings'
     WordsComponent,
     WordDetailComponent,
     MessagesComponent,
-    WordSearchComponent,
+    // WordSearchComponent,
   ],
   providers: [ WordService, MessageService ],
   bootstrap: [ AppComponent ]

@@ -39,29 +39,36 @@ export class WordsComponent implements OnInit {
     .subscribe(categories => this.categories = categories);
   }
 
-  add(ev:any, submitedForm: NgForm): void {
+  add(ev: any, submitedForm: NgForm): void {
     ev.stopImmediatePropagation();
     console.log(submitedForm.form.value);
-    var cetegoryPath = `firestore.googleapis.com/project/${firebaseConfig.projectId}/database/(default)/documents/`,
-    dataSend = {
+    var categoryPath = `firestore.googleapis.com/project/${firebaseConfig.projectId}/database/(default)/documents/`,
+    dataSend: Word = {
+      "id": 0,
       "english": submitedForm.form.value.english.trim(),
       "spanish": submitedForm.form.value.spanish.trim(),
       "spanishPronunciation": submitedForm.form.value.spanishPronunciation.trim(),
       "phonetic": submitedForm.form.value.phonetic.trim(),
-      "category": cetegoryPath + submitedForm.form.value.category.trim(),
-    },
-    wordId = 0;
+      "category": '',
+    };
     this.submitted = true;
 
     if (!dataSend.english) { return null; }
 
-    if (this.words[this.words.length -1].hasOwnProperty("data")) {
-      wordId = this.words[this.words.length -1].data.id;
-    } else {
-      wordId = this.words[this.words.length -1].id;
+    if (this.words[this.words.length -1].hasOwnProperty("data") && this.words[this.words.length -1].data.id != undefined) {
+      dataSend.id = this.words[this.words.length -1].data.id;
+    } else if(this.words[this.words.length -1].id != undefined) {
+      dataSend.id = this.words[this.words.length -1].id;
+    }
+    // console.log(typeof submitedForm.form.value.category)
+    // console.log(submitedForm.form.value.category)
+    if (submitedForm.form.value.category.trim() != '') {
+        dataSend.category = categoryPath + submitedForm.form.value.category.trim()
     }
 
-    this.wordService.addWord(dataSend as Word, wordId)
+    // console.log(dataSend)
+
+    this.wordService.addWord(dataSend as Word);
       // .subscribe(word => {
       //   this.words.push(word);
       // });
@@ -70,6 +77,7 @@ export class WordsComponent implements OnInit {
 
   delete(word: Word): void {
     this.words = this.words.filter(h => h !== word);
-    this.wordService.deleteWord(word).subscribe();
+    this.wordService.deleteWord(word);
+    //.subscribe();
   }
 }

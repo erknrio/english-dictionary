@@ -1,6 +1,6 @@
 <h2>My Words</h2>
 <div>
-  <form #wordForm="ngForm" (ngSubmit)="add($event, wordForm); wordForm.reset()">
+  <form #wordForm="ngForm" (ngSubmit)="add($event, wordForm)">
     <div class="form-group">
       <label for="name">English Word</label>
       <input type="text" class="form-control" id="name" [(ngModel)]="model.english" name="english" #english="ngModel" required />
@@ -23,8 +23,8 @@
       </div>
       <div class="form-group">
         <label for="name">Category</label>
-        <select class="form-control" id="category" [(ngModel)]="model.category" name="category">
-          <option *ngFor="let category of categories" [value]="category.documentId">{{category.data.name}}</option>
+        <select class="form-control" id="category" [(ngModel)]="model.category" name="category" #category="ngModel">
+          <option *ngFor="let category of categories" [value]="category.documentId" [selected]="category.documentId == 'others'">{{category.data.name}}</option>
         </select>
       </div>
     <button type="submit" class="btn btn-success" [disabled]="!wordForm.form.valid">Submit</button>
