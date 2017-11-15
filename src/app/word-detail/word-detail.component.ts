@@ -4,6 +4,8 @@ import { Location } from '@angular/common';
 
 import { Word }         from '../word';
 import { WordService }  from '../word.service';
+// Custom
+import { firebaseConfig }       from '../custom-settings'
 
 @Component({
   selector: 'app-word-detail',
@@ -12,6 +14,8 @@ import { WordService }  from '../word.service';
 })
 export class WordDetailComponent implements OnInit {
   @Input() word: Word;
+  private categories: any;
+  model = new Word({});
   private document:string;
   private collectionName = 'words';
 
@@ -23,22 +27,36 @@ export class WordDetailComponent implements OnInit {
 
   ngOnInit(): void {
     this.getWord();
+    this.getCategories();
   }
 
   getWord(): void {
     const documentId = this.route.snapshot.params.documentId;
     this.document = documentId;
     this.wordService.getWord(documentId)
-      .subscribe(word => this.word = word);
+    .subscribe(
+      word => {
+        word.category = word.category.split("/").slice(-1);
+        this.word = word;
+      }
+    );
+  }
+
+  getCategories(): void {
+    this.wordService.getCategories()
+    .subscribe(categories => this.categories = categories);
   }
 
   goBack(): void {
     this.location.back();
   }
 
- save(): void {
+ save(ev): void {
+   ev.stopImmediatePropagation();
+   this.word.category = `firestore.googleapis.com/project/${firebaseConfig.projectId}/database/(default)/documents/` + this.word.category;
+   console.log(this.word);
     this.wordService.updateWord(this.word, this.document)
-    .subscribe(() => this.goBack());
+    // .subscribe(() => this.goBack());
   }
 }
 

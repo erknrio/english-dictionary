@@ -49,7 +49,7 @@ export class WordsComponent implements OnInit {
       "spanish": submitedForm.form.value.spanish.trim(),
       "spanishPronunciation": submitedForm.form.value.spanishPronunciation.trim(),
       "phonetic": submitedForm.form.value.phonetic.trim(),
-      "category": '',
+      "category": submitedForm.form.value.category,
     };
     this.submitted = true;
 
@@ -62,9 +62,9 @@ export class WordsComponent implements OnInit {
     }
     // console.log(typeof submitedForm.form.value.category)
     // console.log(submitedForm.form.value.category)
-    if (submitedForm.form.value.category.trim() != '') {
-        dataSend.category = categoryPath + submitedForm.form.value.category.trim()
-    }
+    // if (submitedForm.form.value.category.trim() != '') {
+    //     dataSend.category = categoryPath + submitedForm.form.value.category.trim()
+    // }
 
     // console.log(dataSend)
 

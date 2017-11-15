@@ -1,18 +1,30 @@
 <div *ngIf="word">
-  <h2>{{ word.name | uppercase }} - Details</h2>
+  <h2>{{ word.english | uppercase }} - Details</h2>
   <div><span>Id: </span>{{word.id}}</div>
-  <div>
-    <label>Name:
-      <input [(ngModel)]="word.name" placeholder="name"/>
-    </label>
-  </div>
-  <button (click)="goBack()">go back</button>
-  <button (click)="save()">save</button>
+  <form #wordForm="ngForm" (ngSubmit)="save($event)">
+    <div class="form-group">
+      <label for="name">English Word</label>
+      <input type="text" class="form-control" id="name" [(ngModel)]="word.english" name="english" #english="ngModel" required />
+    </div>
+      <div class="form-group">
+        <label for="name">Spanish Word</label>
+        <input type="text" class="form-control" id="spanish" [(ngModel)]="word.spanish" name="spanish" #spanish="ngModel" />
+      </div>
+      <div class="form-group">
+        <label for="name">Spanish Pronunciation</label>
+        <input type="text" class="form-control" id="spanish-pronunciation" [(ngModel)]="word.spanishPronunciation" name="spanishPronunciation" #spanishPronunciation="ngModel" />
+      </div>
+      <div class="form-group">
+        <label for="name">Phonetic</label>
+        <input type="text" class="form-control" id="phonetic" [(ngModel)]="word.phonetic" name="phonetic" #phonetic="ngModel" />
+      </div>
+      <div class="form-group">
+        <label for="name">Category</label>
+        <select class="form-control" id="category" [(ngModel)]="word.category" name="category" #category="ngModel">
+          <option *ngFor="let category of categories" [value]="category.documentId" [selected]="category.documentId == word.category">{{category.data.name}}</option>
+        </select>
+      </div>
+    <button type="submit">Submit</button>
+    <button (click)="goBack()">go back</button>
+</form>
 </div>
-
-
-<!--
-Copyright 2017 Google Inc. All Rights Reserved.
-Use of this source code is governed by an MIT-style license that
-can be found in the LICENSE file at http://angular.io/license
--->
