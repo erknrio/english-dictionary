@@ -37,9 +37,9 @@ export class WordService {
 
   /** GET categories from firestore */
   getCategories (): Observable<Category[]> {
-    var wordsCollection:any = this.afs.collection(this.collectionCategoriesName, ref => ref.orderBy("name"));
-    // Retrieve word data + documentid
-    return wordsCollection.snapshotChanges()
+    var categoriesCollection:any = this.afs.collection(this.collectionCategoriesName, ref => ref.orderBy("name"));
+    // Retrieve category data + documentid
+    return categoriesCollection.snapshotChanges()
     .map(actions => {
       return actions.map(a => {
         const data = a.payload.doc.data() as Category
@@ -73,26 +73,16 @@ export class WordService {
 
   /** POST: add a new word to the server */
   addWord (word: Word, lastId: number): Observable<Word> {
-    // var dataSend: Word = {
-    //   'id': lastId + 1,
-    //   'english': word.english,
-    //   "spanish": word.spanish,
-    //   "spanishPronunciation": word.spanishPronunciation,
-    //   "phonetic": word.phonetic,
-    //   "category": word.category,
-    // };
-
-    console.log(word);
-    // console.log(dataSend)
-
-    this.afs.collection(this.collectionWordName).add(word)
-    .then(function(docRef) {
-      console.log("Document written with ID: ", docRef.id);
-    })
-    .catch(function(error) {
-      console.error("Error adding document: ", error);
-    });
-    return null;
+    var result:any = this.afs.collection(this.collectionWordName).add(word)
+    return result;
+    // .then(function(docRef) {
+    //   console.log("Document written with ID: ", docRef.id);
+    //   return docRef;
+    // })
+    // .catch(function(error) {
+    //   console.error("Error adding document: ", error);
+    //   return null;
+    // });
   }
 
   /** DELETE: delete the word from the server */

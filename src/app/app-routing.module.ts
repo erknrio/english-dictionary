@@ -7,9 +7,9 @@ import { WordDetailComponent }  from './word-detail/word-detail.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
-  { path: 'dashboard',  component: DashboardComponent },
+  { path: 'dashboard', component: DashboardComponent },
   { path: 'detail/:documentId', component: WordDetailComponent },
-  { path: 'words',     component: WordsComponent }
+  { path: 'words', component: WordsComponent }
 ];
 
 @NgModule({

@@ -1,6 +1,6 @@
 <h2>My Words</h2>
 <div>
-  <form #wordForm="ngForm" (ngSubmit)="add(wordForm); wordForm.reset()">
+  <form #wordForm="ngForm" (ngSubmit)="add($event, wordForm); wordForm.reset()">
     <div class="form-group">
       <label for="name">English Word</label>
       <input type="text" class="form-control" id="name" [(ngModel)]="model.english" name="english" #english="ngModel" required />
