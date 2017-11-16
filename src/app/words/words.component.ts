@@ -9,7 +9,7 @@ import { firebaseConfig }       from '../custom-settings'
 @Component({
   selector: 'app-words',
   templateUrl: './words.component.html',
-  styleUrls: ['./words.component.css']
+  // styleUrls: ['./words.component.css']
 })
 
 export class WordsComponent implements OnInit {
@@ -20,6 +20,7 @@ export class WordsComponent implements OnInit {
   private word: string;
   private categories: any;
   private collectionCategoriesName: string = 'categories';
+  showHide: false;
 
   constructor(
     private wordService: WordService,
@@ -27,6 +28,8 @@ export class WordsComponent implements OnInit {
   ngOnInit() {
     this.getWords();
     this.getCategories();
+    $('.collapsible').collapsible();
+    $('select').material_select();
   }
 
   getWords(): void {

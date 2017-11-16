@@ -6,17 +6,14 @@ import 'rxjs/add/operator/map';
 
 @Component({
   selector: 'my-app',
-  styleUrls: ['./app.component.css'],
-  template: `
-  <h1>{{title}}</h1>
-  <nav>
-    <a routerLink="/dashboard" routerLinkActive="active">Dashboard</a>
-    <a routerLink="/words" routerLinkActive="active">Words</a>
-   </nav>
-  <router-outlet></router-outlet>
-  `
+  templateUrl: './app.component.html',
+  // styleUrls: ['./app.component.css']
 })
 
 export class AppComponent {
   title = 'English Dictionary Intermediate 1';
+
+  ngOnInit() {
+    $(".button-collapse").sideNav();
+  }
 }
