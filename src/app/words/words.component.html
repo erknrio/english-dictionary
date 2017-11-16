@@ -8,7 +8,7 @@
           <div class="row">
             <div class="input-field col s12 m12 l12 xl12">
               <label for="name">English Word</label>
-              <input type="text" class="form-control" id="name" [(ngModel)]="model.english" name="english" #english="ngModel" required />
+              <input type="text" id="name" [(ngModel)]="model.english" name="english" #english="ngModel" required />
               <div [hidden]="english.valid || english.pristine"
                 class="alert alert-danger">
                 English word is required
@@ -17,33 +17,31 @@
           </div>
           <div class="row">
             <div class="input-field col s12 m12 l12 xl12">
-              <label for="name">Spanish Word</label>
-              <input type="text" class="form-control" id="spanish" [(ngModel)]="model.spanish" name="spanish" #spanish="ngModel" />
+              <label for="spanish">Spanish Word</label>
+              <input type="text" id="spanish" [(ngModel)]="model.spanish" name="spanish" #spanish="ngModel" />
             </div>
           </div>
           <div class="row">
             <div class="input-field col s12 m12 l12 xl12">
-              <label for="name">Spanish Pronunciation</label>
-              <input type="text" class="form-control" id="spanish-pronunciation" [(ngModel)]="model.spanishPronunciation" name="spanishPronunciation" #spanishPronunciation="ngModel" />
+              <label for="spanish-pronunciation">Spanish Pronunciation</label>
+              <input type="text" id="spanish-pronunciation" [(ngModel)]="model.spanishPronunciation" name="spanishPronunciation" #spanishPronunciation="ngModel" />
             </div>
           </div>
           <div class="row">
             <div class="input-field col s12 m12 l12 xl12">
-              <label for="name">Phonetic</label>
-              <input type="text" class="form-control" id="phonetic" [(ngModel)]="model.phonetic" name="phonetic" #phonetic="ngModel" />
+              <label for="phonetic">Phonetic</label>
+              <input type="text" id="phonetic" [(ngModel)]="model.phonetic" name="phonetic" #phonetic="ngModel" />
             </div>
           </div>
           <div class="row">
-            <div class="input-field col s12 m12 l12 xl12">
-              <label for="name">Category</label>
-              <select id="category" [(ngModel)]="model.category" name="category" #category="ngModel">
-                <option *ngFor="let category of categories" [value]="category.documentId" [selected]="category.documentId == 'others'">{{category.data.name}}</option>
-              </select>
-            </div>
+            <label for="category">Category</label>
+            <select id="category" class="browser-default" [(ngModel)]="model.category" name="category" #category="ngModel">
+              <option *ngFor="let category of categories" [value]="category.documentId" [selected]="category.documentId == 'others'">{{category.data.name}}</option>
+            </select>
           </div>
           <div class="row">
             <div class="input-field col s12 m12 l12 xl12">
-              <button type="submit" class="col s12 m6 l6 xl6 btn waves-effect waves-light" [disabled]="!wordForm.form.valid">Submit</button>
+              <button type="submit" class="col s12 m6 l6 xl6 btn waves-effect waves-light teal lighten-2" [disabled]="!wordForm.form.valid">Submit</button>
               <button type="reset" class="col s12 m6 l6 xl6 btn waves-effect waves-light orange lighten-2">Clear</button>
             </div>
           </div>
@@ -59,7 +57,7 @@
             <a class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">delete</i></a>
           </div>
           <div class="card-content center-align">
-            <a routerLink="/detail/{{word.documentId}}" class=" white-text">
+            <a routerLink="/detail/{{word.documentId}}" class="col s12 m12 l12 xl12 white-text">
               {{word.data.english}}
             </a>
           </div>

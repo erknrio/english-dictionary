@@ -28,8 +28,10 @@ export class WordsComponent implements OnInit {
   ngOnInit() {
     this.getWords();
     this.getCategories();
-    $('.collapsible').collapsible();
-    $('select').material_select();
+    $(document).ready(function() {
+      $('.collapsible').collapsible();
+      $('select').material_select();
+    });
   }
 
   getWords(): void {

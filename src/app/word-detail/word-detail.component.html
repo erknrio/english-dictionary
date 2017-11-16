@@ -1,30 +1,37 @@
-<div *ngIf="word">
-  <h2>{{ word.english | uppercase }} - Details</h2>
-  <div><span>Id: </span>{{word.id}}</div>
-  <form #wordForm="ngForm" (ngSubmit)="save($event)">
-    <div class="form-group">
-      <label for="name">English Word</label>
-      <input type="text" class="form-control" id="name" [(ngModel)]="word.english" name="english" #english="ngModel" required />
+<div class="container">
+  <div class="row">
+    <div class="col s12 m12 l12 xl12">
+      <div *ngIf="word">
+        <h2>{{ word.english | uppercase }}</h2>
+        <form #wordForm="ngForm" (ngSubmit)="save($event)" class="pretty-top">
+          <div class="input-field col s12 m12 l12 xl12">
+            <label class="light-blue-text text-lighten-1" for="name">English Word</label>
+            <input type="text" id="name" [(ngModel)]="word.english" name="english" #english="ngModel" required />
+          </div>
+          <div class="input-field col s12 m12 l12 xl12">
+            <label class="light-blue-text text-lighten-1" for="spanish">Spanish Word</label>
+            <input type="text" id="spanish" [(ngModel)]="word.spanish" name="spanish" #spanish="ngModel" />
+          </div>
+          <div class="input-field col s12 m12 l12 xl12">
+            <label class="light-blue-text text-lighten-1" for="spanish-pronunciation">Spanish Pronunciation</label>
+            <input type="text" id="spanish-pronunciation" [(ngModel)]="word.spanishPronunciation" name="spanishPronunciation" #spanishPronunciation="ngModel" />
+          </div>
+          <div class="input-field col s12 m12 l12 xl12">
+            <label class="light-blue-text text-lighten-1" for="phonetic">Phonetic</label>
+            <input type="text" id="phonetic" [(ngModel)]="word.phonetic" name="phonetic" #phonetic="ngModel" />
+          </div>
+          <label class="light-blue-text text-lighten-1" for="name">Category</label>
+          <select id="category" class="browser-default" [(ngModel)]="word.category" name="category" #category="ngModel">
+            <option *ngFor="let category of categories" [value]="category.documentId" [selected]="category.documentId == word.category">{{category.data.name}}</option>
+          </select>
+          <div class="row">
+            <div class="input-field col s12 m12 l12 xl12">
+              <button type="submit" class="col s12 m6 l6 xl6 btn waves-effect waves-light teal lighten-2">Submit</button>
+              <button type="button" class="col s12 m6 l6 xl6 btn waves-effect waves-light orange lighten-2" (click)="goBack()">Go back</button>
+            </div>
+          </div>
+        </form>
+      </div>
     </div>
-      <div class="form-group">
-        <label for="name">Spanish Word</label>
-        <input type="text" class="form-control" id="spanish" [(ngModel)]="word.spanish" name="spanish" #spanish="ngModel" />
-      </div>
-      <div class="form-group">
-        <label for="name">Spanish Pronunciation</label>
-        <input type="text" class="form-control" id="spanish-pronunciation" [(ngModel)]="word.spanishPronunciation" name="spanishPronunciation" #spanishPronunciation="ngModel" />
-      </div>
-      <div class="form-group">
-        <label for="name">Phonetic</label>
-        <input type="text" class="form-control" id="phonetic" [(ngModel)]="word.phonetic" name="phonetic" #phonetic="ngModel" />
-      </div>
-      <div class="form-group">
-        <label for="name">Category</label>
-        <select class="form-control" id="category" [(ngModel)]="word.category" name="category" #category="ngModel">
-          <option *ngFor="let category of categories" [value]="category.documentId" [selected]="category.documentId == word.category">{{category.data.name}}</option>
-        </select>
-      </div>
-    <button type="submit">Submit</button>
-    <button (click)="goBack()">go back</button>
-</form>
+  </div>
 </div>

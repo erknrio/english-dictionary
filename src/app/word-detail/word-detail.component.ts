@@ -10,7 +10,7 @@ import { firebaseConfig }       from '../custom-settings'
 @Component({
   selector: 'app-word-detail',
   templateUrl: './word-detail.component.html',
-  styleUrls: [ './word-detail.component.css' ]
+  // styleUrls: [ './word-detail.component.css' ]
 })
 export class WordDetailComponent implements OnInit {
   @Input() word: Word;
@@ -36,7 +36,7 @@ export class WordDetailComponent implements OnInit {
     this.wordService.getWord(documentId)
     .subscribe(
       word => {
-        word.category = word.category.split("/").slice(-1);
+        word.category = word.category.split("/").slice(-1)[0];
         this.word = word;
       }
     );

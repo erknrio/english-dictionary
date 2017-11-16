@@ -18,6 +18,7 @@ import { MessageService }       from './message.service';
 import { MessagesComponent }    from './messages/messages.component';
 // Custom
 import { firebaseConfig }       from './custom-settings'
+import * as $ from 'jquery';
 
 @NgModule({
   imports: [
