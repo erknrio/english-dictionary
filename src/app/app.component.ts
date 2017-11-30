@@ -14,6 +14,6 @@ export class AppComponent {
   title = 'English Dictionary Intermediate 1';
 
   ngOnInit() {
-    $(".button-collapse").sideNav();
+    (<any>$(".button-collapse")).sideNav();
   }
 }

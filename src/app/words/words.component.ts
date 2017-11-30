@@ -29,8 +29,7 @@ export class WordsComponent implements OnInit {
     this.getWords();
     this.getCategories();
     $(document).ready(function() {
-      $('.collapsible').collapsible();
-      $('select').material_select();
+      (<any>$('select')).material_select();
     });
   }
 
