@@ -36,7 +36,6 @@
     "@types/jquery": "^3.2.16",
     "@types/materialize-css": "^0.100.2",
     "@types/node": "~6.0.60",
-    "angular-in-memory-web-api": "^0.5.1",
     "codelyzer": "~4.0.0",
     "jasmine-core": "~2.8.0",
     "jasmine-spec-reporter": "~4.2.1",

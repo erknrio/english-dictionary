@@ -14,6 +14,7 @@ import { WordDetailComponent }  from './word-detail/word-detail.component';
 import { WordsComponent }       from './words/words.component';
 import { WordSearchComponent }  from './word-search/word-search.component';
 import { WordService }          from './word.service';
+import { WordSearchService }    from './word-search.service';
 import { MessageService }       from './message.service';
 import { MessagesComponent }    from './messages/messages.component';
 // Custom
@@ -34,9 +35,9 @@ import * as $ from 'jquery';
     WordsComponent,
     WordDetailComponent,
     MessagesComponent,
-    // WordSearchComponent,
+    WordSearchComponent,
   ],
-  providers: [ WordService, MessageService ],
+  providers: [ WordService, WordSearchService, MessageService ],
   bootstrap: [ AppComponent ]
 })
 

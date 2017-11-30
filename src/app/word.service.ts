@@ -24,6 +24,7 @@ export class WordService {
   getWords (): Observable<Word[]> {
     var wordsCollection:any = this.afs.collection(this.collectionWordName, ref => ref.orderBy("english"));
     // Retrieve word data + documentid
+    // https://github.com/angular/angularfire2/blob/master/docs/firestore/collections.md
     return wordsCollection.snapshotChanges()
     .map(actions => {
       return actions.map(a => {
@@ -39,6 +40,7 @@ export class WordService {
   getCategories (): Observable<Category[]> {
     var categoriesCollection:any = this.afs.collection(this.collectionCategoriesName, ref => ref.orderBy("name"));
     // Retrieve category data + documentid
+    // https://github.com/angular/angularfire2/blob/master/docs/firestore/collections.md
     return categoriesCollection.snapshotChanges()
     .map(actions => {
       return actions.map(a => {
@@ -65,7 +67,7 @@ export class WordService {
       return of([]);
     }
 
-    wordsCollection = this.afs.collection(this.collectionCategoriesName, ref => ref.where("english", "==", term));
+    wordsCollection = this.afs.collection(this.collectionCategoriesName, ref => ref.where("english", ">=", term));
     return wordsCollection.valueChanges();
     // return this.http.get<Word[]>(`api/words/?name=${term}`).pipe(
     //   tap(_ => this.log(`found words matching "${term}"`)),

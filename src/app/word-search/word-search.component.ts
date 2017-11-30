@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { Observable } from 'rxjs/Observable';
+import { EmptyObservable } from 'rxjs/observable/EmptyObservable';
 import { Subject }    from 'rxjs/Subject';
 import { of }         from 'rxjs/observable/of';
 
@@ -9,7 +10,7 @@ import {
  } from 'rxjs/operators';
 
 import { Word } from '../word';
-import { WordService } from '../word.service';
+import { WordSearchService } from '../word-search.service';
 
 @Component({
   selector: 'app-word-search',
@@ -18,9 +19,12 @@ import { WordService } from '../word.service';
 })
 export class WordSearchComponent implements OnInit {
   words$: Observable<Word[]>;
+  words;
+  private startAt = new Subject();
+  private endAt = new Subject();
   private searchTerms = new Subject<string>();
 
-  constructor(private wordService: WordService) {}
+  constructor(private wordSearchService: WordSearchService) {}
 
   // Push a search term into the observable stream.
   search(term: string): void {
@@ -31,12 +35,17 @@ export class WordSearchComponent implements OnInit {
     this.words$ = this.searchTerms.pipe(
       // wait 300ms after each keystroke before considering the term
       debounceTime(300),
-
       // ignore new term if same as previous term
       distinctUntilChanged(),
-
       // switch to new search observable each time the term changes
-      switchMap((term: string) => this.wordService.searchWords(term)),
+      switchMap((term: string) => {
+        if (typeof term != "undefined" && term != '' && term != null) {
+          console.log(this.wordSearchService.search(term));
+          return this.wordSearchService.search(term);
+        }
+
+        return new EmptyObservable();
+      }),
     );
   }
 }

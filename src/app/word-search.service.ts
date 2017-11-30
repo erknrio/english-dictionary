@@ -11,15 +11,23 @@ import { Word }       from './word';
 export class WordSearchService {
   private collectionName = 'words';
 
-
   constructor(private afs: AngularFirestore) {}
 
   search(term: string): Observable<Word[]> {
-    var wordsCollection:any = this.afs.collection(this.collectionName).doc( + '/' + term);
-    return wordsCollection.valueChanges();
+    var wordsCollection:any = this.afs.collection(
+      this.collectionName,
+      ref => ref.orderBy("english").startAt(term).endAt(term + '\uf8ff').limit(10)
+    );
+    // Retrieve category data + documentid
+    // https://github.com/angular/angularfire2/blob/master/docs/firestore/collections.md
+    return wordsCollection.snapshotChanges()
+    .map(actions => {
+      return actions.map(a => {
+        const data = a.payload.doc.data() as Word
+        const documentId = a.payload.doc.id;
 
-    // return this.http
-    //            .get(`api/words/?name=${term}`)
-    //            .map(response => response.json().data as Word[]);
+        return { documentId, data };
+      });
+    });
   }
 }
