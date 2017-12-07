@@ -1,4 +1,4 @@
-<div id="search-component">
+<!-- <div id="search-component">
   <p>Word Search</p>
   <input #searchBox id="search-box" (keyup)="search(searchBox.value)" />
   <ul class="search-result">
@@ -8,11 +8,12 @@
       </a>
     </li>
   </ul>
+</div> -->
+<div id="search-component">
+  <p>Word Search</p>
+  <div class="input-field col s12">
+    <i class="material-icons prefix">textsms</i>
+    <input #searchBox id="search-box" class="autocomplete" (keyup)="search(searchBox.value)" />
+    <label for="autocomplete-input">Autocomplete</label>
+  </div>
 </div>
-
-
-<!--
-Copyright 2017 Google Inc. All Rights Reserved.
-Use of this source code is governed by an MIT-style license that
-can be found in the LICENSE file at http://angular.io/license
--->
