@@ -15,12 +15,12 @@ import { firebaseConfig }       from '../custom-settings'
 export class WordsComponent implements OnInit {
   words: Word[];
   model = new Word({});
-  submitted = false;
+  submitted: boolean = false;
   private id: number;
   private word: string;
   private categories: any;
   private collectionCategoriesName: string = 'categories';
-  showHide: false;
+  showHide:boolean = false;
 
   constructor(
     private wordService: WordService,
@@ -64,13 +64,6 @@ export class WordsComponent implements OnInit {
     } else if(this.words[this.words.length -1].id != undefined) {
       dataSend.id = this.words[this.words.length -1].id;
     }
-    // console.log(typeof submitedForm.form.value.category)
-    // console.log(submitedForm.form.value.category)
-    // if (submitedForm.form.value.category.trim() != '') {
-    //     dataSend.category = categoryPath + submitedForm.form.value.category.trim()
-    // }
-
-    // console.log(dataSend)
 
     this.wordService.addWord(dataSend as Word);
       // .subscribe(word => {

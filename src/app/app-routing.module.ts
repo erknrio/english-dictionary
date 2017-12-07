@@ -6,8 +6,9 @@ import { WordsComponent }      from './words/words.component';
 import { WordDetailComponent }  from './word-detail/word-detail.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
-  { path: 'dashboard', component: DashboardComponent },
+  // { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
+  { path: '', component: DashboardComponent },
+  // { path: 'dashboard', component: DashboardComponent },
   { path: 'detail/:documentId', component: WordDetailComponent },
   { path: 'words', component: WordsComponent }
 ];
