@@ -5,19 +5,19 @@
         <h2>{{ word.english | uppercase }}</h2>
         <form #wordForm="ngForm" (ngSubmit)="save($event)" class="pretty-top">
           <div class="input-field col s12 m12 l12 xl12">
-            <label class="light-blue-text text-lighten-1" for="name">English Word</label>
+            <label class="light-blue-text text-lighten-1 active" for="name">English Word</label>
             <input type="text" id="name" [(ngModel)]="word.english" name="english" #english="ngModel" required />
           </div>
           <div class="input-field col s12 m12 l12 xl12">
-            <label class="light-blue-text text-lighten-1" for="spanish">Spanish Word</label>
+            <label class="light-blue-text text-lighten-1 active" for="spanish">Spanish Word</label>
             <input type="text" id="spanish" [(ngModel)]="word.spanish" name="spanish" #spanish="ngModel" />
           </div>
           <div class="input-field col s12 m12 l12 xl12">
-            <label class="light-blue-text text-lighten-1" for="spanish-pronunciation">Spanish Pronunciation</label>
+            <label class="light-blue-text text-lighten-1 active" for="spanish-pronunciation">Spanish Pronunciation</label>
             <input type="text" id="spanish-pronunciation" [(ngModel)]="word.spanishPronunciation" name="spanishPronunciation" #spanishPronunciation="ngModel" />
           </div>
           <div class="input-field col s12 m12 l12 xl12">
-            <label class="light-blue-text text-lighten-1" for="phonetic">Phonetic</label>
+            <label class="light-blue-text text-lighten-1 active" for="phonetic">Phonetic</label>
             <input type="text" id="phonetic" [(ngModel)]="word.phonetic" name="phonetic" #phonetic="ngModel" />
           </div>
           <label class="light-blue-text text-lighten-1" for="name">Category</label>

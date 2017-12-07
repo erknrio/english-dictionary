@@ -33,6 +33,12 @@ export class WordsComponent implements OnInit {
     });
   }
 
+  private capitalize(capitalize) {
+    return capitalize.toLowerCase().replace(/\b\w/g, function(m) {
+        return m.toUpperCase();
+    });
+}
+
   getWords(): void {
     this.wordService.getWords()
     .subscribe(words => this.words = words);
@@ -45,13 +51,13 @@ export class WordsComponent implements OnInit {
 
   add(ev: any, submitedForm: NgForm): void {
     ev.stopImmediatePropagation();
-    console.log(submitedForm.form.value);
+
     var categoryPath = `firestore.googleapis.com/project/${firebaseConfig.projectId}/database/(default)/documents/`,
     dataSend: Word = {
       "id": 0,
-      "english": submitedForm.form.value.english.trim(),
-      "spanish": submitedForm.form.value.spanish.trim(),
-      "spanishPronunciation": submitedForm.form.value.spanishPronunciation.trim(),
+      "english": this.capitalize(submitedForm.form.value.english.trim()),
+      "spanish": this.capitalize(submitedForm.form.value.spanish.trim()),
+      "spanishPronunciation": this.capitalize(submitedForm.form.value.spanishPronunciation.trim()),
       "phonetic": submitedForm.form.value.phonetic.trim(),
       "category": submitedForm.form.value.category,
     };

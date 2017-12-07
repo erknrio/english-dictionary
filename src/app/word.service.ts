@@ -108,7 +108,7 @@ export class WordService {
   updateWord (word: Word, documentId): Observable<any> {
     this.afs.collection(this.collectionWordName).doc(documentId).update(word)
     .then(function() {
-      console.log("Word updated successful");
+      alert("Word updated successful");
     })
     .catch(function(error) {
       console.error("Error adding document: ", error);
