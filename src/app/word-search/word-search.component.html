@@ -1,19 +1,8 @@
-<!-- <div id="search-component">
-  <p>Word Search</p>
-  <input #searchBox id="search-box" (keyup)="search(searchBox.value)" />
-  <ul class="search-result">
-    <li *ngFor="let word of words$ | async" >
-      <a routerLink="/detail/{{word.documentId}}">
-        {{word.data.english}}
-      </a>
-    </li>
-  </ul>
-</div> -->
 <div id="search-component">
   <p>Word Search</p>
-  <div class="input-field col s12">
+  <div class="input-field col s12 m12 l12 xl12">
     <i class="material-icons prefix">textsms</i>
     <input #searchBox id="search-box" class="autocomplete" (keyup)="search(searchBox.value)" />
-    <label for="autocomplete-input">Autocomplete</label>
+    <label for="search-box" class="active">Autocomplete</label>
   </div>
 </div>

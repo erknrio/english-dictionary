@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-// firestore
-// import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
-import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
+
+import { AuthService } from './auth.service';
 
 @Component({
   selector: 'my-app',
@@ -12,8 +11,21 @@ import 'rxjs/add/operator/map';
 
 export class AppComponent {
   title = 'English Dictionary Intermediate 1';
+  email: string;
+  password: string;
+
+  constructor(public authService: AuthService) {}
 
   ngOnInit() {
     (<any>$(".button-collapse")).sideNav();
+  }
+
+  login() {
+    this.authService.login(this.email, this.password);
+    this.email = this.password = '';
+  }
+
+  logout() {
+    this.authService.logout();
   }
 }

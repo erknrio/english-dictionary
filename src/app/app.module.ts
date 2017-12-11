@@ -7,6 +7,7 @@ import { AppRoutingModule }     from './app-routing.module';
 // Firestore modules
 import { AngularFireModule } from 'angularfire2';
 import { AngularFirestoreModule } from 'angularfire2/firestore';
+import { AngularFireAuthModule } from 'angularfire2/auth';
 // App components and services
 import { AppComponent }         from './app.component';
 import { DashboardComponent }   from './dashboard/dashboard.component';
@@ -15,6 +16,7 @@ import { WordsComponent }       from './words/words.component';
 import { WordSearchComponent }  from './word-search/word-search.component';
 import { WordService }          from './word.service';
 import { WordSearchService }    from './word-search.service';
+import { AuthService }          from './auth.service';
 import { MessageService }       from './message.service';
 import { MessagesComponent }    from './messages/messages.component';
 // Custom
@@ -27,7 +29,8 @@ import * as $ from 'jquery';
     FormsModule,
     AppRoutingModule,
     AngularFireModule.initializeApp(firebaseConfig),
-    AngularFirestoreModule
+    AngularFirestoreModule,
+    AngularFireAuthModule
   ],
   declarations: [
     AppComponent,
@@ -37,7 +40,7 @@ import * as $ from 'jquery';
     MessagesComponent,
     WordSearchComponent,
   ],
-  providers: [ WordService, WordSearchService, MessageService ],
+  providers: [ WordService, WordSearchService, AuthService, MessageService ],
   bootstrap: [ AppComponent ]
 })
 
