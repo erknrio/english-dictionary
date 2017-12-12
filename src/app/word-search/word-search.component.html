@@ -1,8 +1,21 @@
-<div id="search-component">
-  <p>Word Search</p>
-  <div class="input-field col s12 m12 l12 xl12">
-    <i class="material-icons prefix">textsms</i>
-    <input #searchBox id="search-box" class="autocomplete" (keyup)="search(searchBox.value)" />
-    <label for="search-box" class="active">Autocomplete</label>
+<div class="row">
+  <div class="col s12 m12 l12 xl2">
+    <div id="search-component">
+      <div class="input-field col s12 m12 l12 xl12">
+        <i class="material-icons prefix">textsms</i>
+        <input #searchBox id="search-box" class="autocomplete" (keyup)="search(searchBox.value)" />
+        <label for="search-box" class="active">Word Search</label>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col s12 m12 l12 xl12" *ngFor="let word of words$ | async">
+    <div class="chip light-blue lighten-1">
+      <a class="white-text" routerLink="/detail/{{word.documentId}}">
+        {{word.data.english}}
+      </a>
+    </div>
   </div>
 </div>

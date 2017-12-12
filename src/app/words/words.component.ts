@@ -35,9 +35,9 @@ export class WordsComponent implements OnInit {
 
   private capitalize(capitalize) {
     return capitalize.toLowerCase().replace(/\b\w/g, function(m) {
-        return m.toUpperCase();
+      return m.toUpperCase();
     });
-}
+  }
 
   getWords(): void {
     this.wordService.getWords()

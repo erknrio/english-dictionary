@@ -14,9 +14,10 @@ export class WordSearchService {
   constructor(private afs: AngularFirestore) {}
 
   search(term: string): Observable<Word[]> {
-    var wordsCollection:any = this.afs.collection(
+    var limit = 10,
+    wordsCollection:any = this.afs.collection(
       this.collectionName,
-      ref => ref.orderBy("english").startAt(term).endAt(term + '\uf8ff').limit(10)
+      ref => ref.orderBy("english").startAt(term).endAt(term + '\uf8ff').limit(limit)
     );
     // Retrieve category data + documentid
     // https://github.com/angular/angularfire2/blob/master/docs/firestore/collections.md
