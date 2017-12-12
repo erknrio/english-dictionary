@@ -8,7 +8,6 @@ import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument 
 
 import { Word } from './word';
 import { Category } from './category';
-import { MessageService } from './message.service';
 
 @Injectable()
 export class WordService {
@@ -17,10 +16,13 @@ export class WordService {
   private wordsUrl = 'api/words';  // URL to web api
 
   constructor(
-    private afs: AngularFirestore,
-    private messageService: MessageService) { }
+    private afs: AngularFirestore) { }
 
-  /** GET words from firestore */
+  /**
+   * Get words from Firestore
+   * @method getWords
+   * @return {Observable<Word[]>} [description]
+   */
   getWords (): Observable<Word[]> {
     var wordsCollection:any = this.afs.collection(this.collectionWordName, ref => ref.orderBy("english"));
     // Retrieve word data + documentid
@@ -36,7 +38,11 @@ export class WordService {
     });
   }
 
-  /** GET categories from firestore */
+  /**
+   * Get categories from Firestore
+   * @method getCategories
+   * @return {Observable<Category[]>} [description]
+   */
   getCategories (): Observable<Category[]> {
     var categoriesCollection:any = this.afs.collection(this.collectionCategoriesName, ref => ref.orderBy("name"));
     // Retrieve category data + documentid
@@ -52,16 +58,25 @@ export class WordService {
     });
   }
 
-  /** GET word by id. Will 404 if id not found */
+  /**
+   * Get word by id
+   * @method getWord
+   * @param  {string}           documentId Word unique id
+   * @return {Observable<Word>}            [description]
+   */
   getWord(documentId: string): Observable<Word> {
     var wordsCollection:any = this.afs.doc(this.collectionWordName + '/' + documentId);
     return wordsCollection.valueChanges();
   }
 
-  /* GET words whose name contains search term */
+  /**
+   * Get words whose name contains search term
+   * @method searchWords
+   * @param  {string}             term Partial word for searh
+   * @return {Observable<Word[]>}      [description]
+   */
   searchWords(term: string): Observable<Word[]> {
     var wordsCollection: any;
-    // FIXME Implementar busqueda
     if (!term.trim()) {
       // if not search term, return empty word array.
       return of([]);
@@ -69,42 +84,37 @@ export class WordService {
 
     wordsCollection = this.afs.collection(this.collectionCategoriesName, ref => ref.where("english", ">=", term));
     return wordsCollection.valueChanges();
-    // return this.http.get<Word[]>(`api/words/?name=${term}`).pipe(
-    //   tap(_ => this.log(`found words matching "${term}"`)),
-    //   catchError(this.handleError<Word[]>('searchWords', []))
-    // );
   }
 
-  //////// Save methods //////////
-
-  /** POST: add a new word to the server */
+  /**
+   * Add a new word to Firestore
+   * @method addWord
+   * @param  {Word}             word Word to add
+   * @return {Observable<Word>}
+   */
   addWord (word: Word): Observable<Word> {
     var result:any = this.afs.collection(this.collectionWordName).add(word);
     return result;
-    // .then(function(docRef) {
-    //   console.log("Document written with ID: ", docRef.id);
-    //   return docRef;
-    // })
-    // .catch(function(error) {
-    //   console.error("Error adding document: ", error);
-    //   return null;
-    // });
   }
 
-  /** DELETE: delete the word from the server */
+  /**
+   * Delete the word from the server
+   * @method deleteWord
+   * @param  {Word}             word Word to delete
+   * @return {Observable<Word>}
+   */
   deleteWord (word: Word): Observable<Word> {
     var result: any = this.afs.collection(this.collectionWordName).doc(word.documentId).delete();
     return result;
-    // .then(function() {
-    //   console.log("Word with ID: " + word.documentId + " deleted successful");
-    // })
-    // .catch(function(error) {
-    //   console.error("Error adding document: ", error);
-    // });
-    // return null;
   }
 
-  /** PUT: update the word on the server */
+  /**
+   * Update the word on the server
+   * @method updateWord
+   * @param  {Word}            word       Word to update
+   * @param  {[type]}          documentId Word unique id
+   * @return {Observable<any>}
+   */
   updateWord (word: Word, documentId): Observable<any> {
     this.afs.collection(this.collectionWordName).doc(documentId).update(word)
     .then(function() {

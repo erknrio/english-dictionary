@@ -17,8 +17,6 @@ import { WordSearchComponent }  from './word-search/word-search.component';
 import { WordService }          from './word.service';
 import { WordSearchService }    from './word-search.service';
 import { AuthService }          from './auth.service';
-import { MessageService }       from './message.service';
-import { MessagesComponent }    from './messages/messages.component';
 // Custom
 import { firebaseConfig }       from './custom-settings'
 import * as $ from 'jquery';
@@ -37,10 +35,9 @@ import * as $ from 'jquery';
     DashboardComponent,
     WordsComponent,
     WordDetailComponent,
-    MessagesComponent,
     WordSearchComponent,
   ],
-  providers: [ WordService, WordSearchService, AuthService, MessageService ],
+  providers: [ WordService, WordSearchService, AuthService ],
   bootstrap: [ AppComponent ]
 })
 

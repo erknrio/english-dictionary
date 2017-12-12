@@ -9,7 +9,6 @@ import { firebaseConfig }       from '../custom-settings'
 @Component({
   selector: 'app-words',
   templateUrl: './words.component.html',
-  // styleUrls: ['./words.component.css']
 })
 
 export class WordsComponent implements OnInit {
@@ -25,6 +24,7 @@ export class WordsComponent implements OnInit {
   constructor(
     private wordService: WordService,
   ) {}
+
   ngOnInit() {
     this.getWords();
     this.getCategories();
@@ -72,15 +72,11 @@ export class WordsComponent implements OnInit {
     }
 
     this.wordService.addWord(dataSend as Word);
-      // .subscribe(word => {
-      //   this.words.push(word);
-      // });
     submitedForm.reset();
   }
 
   delete(word: Word): void {
     this.words = this.words.filter(h => h !== word);
     this.wordService.deleteWord(word);
-    //.subscribe();
   }
 }

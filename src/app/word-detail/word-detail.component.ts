@@ -10,8 +10,8 @@ import { firebaseConfig }       from '../custom-settings'
 @Component({
   selector: 'app-word-detail',
   templateUrl: './word-detail.component.html',
-  // styleUrls: [ './word-detail.component.css' ]
 })
+
 export class WordDetailComponent implements OnInit {
   @Input() word: Word;
   private categories: any;
@@ -56,13 +56,5 @@ export class WordDetailComponent implements OnInit {
    this.word.category = `firestore.googleapis.com/project/${firebaseConfig.projectId}/database/(default)/documents/` + this.word.category;
    console.log(this.word);
     this.wordService.updateWord(this.word, this.document)
-    // .subscribe(() => this.goBack());
   }
 }
-
-
-/*
-Copyright 2017 Google Inc. All Rights Reserved.
-Use of this source code is governed by an MIT-style license that
-can be found in the LICENSE file at http://angular.io/license
-*/
