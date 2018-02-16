@@ -37,6 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'dictionary',
+    'commons',
 ]
 
 MIDDLEWARE = [
@@ -119,11 +121,10 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/login/'
 
 for f in ["settings_local.py"]:
-    full = os.path.join(BASE_DIR, "sieltec_mantenimiento", f)
+    full = os.path.join(BASE_DIR, ".", f)
     if os.path.isfile(full):
         execfile(full)
