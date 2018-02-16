@@ -1,0 +1,82 @@
+{% extends 'commons/base.html' %}
+
+{% block title %}- Words{% endblock title %}
+
+{% block content %}
+<h1>Words</h1>
+<section class="pretty-top">
+  <div class="row">
+    <div class="col s12">
+      <a href="./create/" class="lime darken-3 waves-effect waves-light btn btn-large">Add new word</a>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col s12">
+      <table class="datatables display">
+        <thead>
+          <tr>
+            <th>English word</th>
+            <th>Spanish word</th>
+            <th>Spanish pronunciation</th>
+            <th>Phonetics</th>
+            <th>Notes</th>
+            <th>Category</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for element in object_list %}
+          <tr>
+            <td>{{ element.english_word }}</td>
+            <td>{{ element.spanish_word }}</td>
+            <td>{{ element.spanish_pronunciation }}</td>
+            <td>{{ element.phonetics }}</td>
+            <td>{{ element.notes|truncatewords_html:8 }}</td>
+            <td>{{ element.category }}</td>
+            <td>
+              <a href="./detail/{{  element.pk  }}" class="green-text">
+                <i class="material-icons">visibility</i>
+              </a>
+              <a href="./update/{{ element.pk }}" class="orange-text">
+                <i class="material-icons">mode_edit</i>
+              </a>
+              <a href="./delete/{{ element.pk }}" class="red-text">
+                <i class="material-icons">delete</i>
+              </a>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+  {% comment %}
+  {% if is_paginated %}
+  <ul class="pagination">
+    {% if page_obj.has_previous %}
+    <li><a href="?page={{ page_obj.previous_page_number }}">&laquo;</a></li>
+    {% else %}
+    <li class="disabled"><span>&laquo;</span></li>
+    {% endif %}
+    {% for i in paginator.page_range %}
+    {% if page_obj.number == i %}
+    <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+    {% else %}
+    <li><a href="?page={{ i }}">{{ i }}</a></li>
+    {% endif %}
+    {% endfor %}
+    {% if page_obj.has_next %}
+    <li><a href="?page={{ page_obj.next_page_number }}">&raquo;</a></li>
+    {% else %}
+    <li class="disabled"><span>&raquo;</span></li>
+    {% endif %}
+  </ul>
+  {% endif %}
+  {% endcomment %}
+  <div class="row">
+    <div class="col s12">
+      <a href="./create/" class="lime darken-3 waves-effect waves-light btn btn-large">Add new word</a>
+    </div>
+  </div>
+</section>
+{% endblock content %}

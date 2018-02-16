@@ -1,0 +1,38 @@
+{% extends 'commons/base.html' %}
+
+{% block title %}- New Word{% endblock title %}
+
+{% block content %}
+<h1>New Word</h1>
+<section class="pretty-top">
+  {% if form.errors %}
+  <div class="col s12 red-text">
+    {{ form.errors }}
+  </div>
+  {% endif %}
+  <form class="col s12" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {% for field in form %}
+    <div class="row">
+      {% if field.errors %}
+      <div class="red-text">
+        {{ field.errors }}
+      </div>
+      {% endif %}
+      <div class="input-field col s12">
+        <label for="{{ field.name }}" class="active">{{ field.label }}</label>
+        {{ field }}
+        {% if field.help_text %}
+        <span class="helptext">{{ field.help_text|safe }}</span>
+        {% endif %}
+      </div>
+    </div>
+    {% endfor %}
+    <button type="submit" class="col s12 waves-effect waves-light btn-large">
+      <i class="material-icons left">save</i>
+      Save
+      <i class="material-icons right">save</i>
+    </button>
+  </form>
+</section>
+{% endblock content %}

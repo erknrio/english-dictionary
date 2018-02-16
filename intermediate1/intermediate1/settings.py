@@ -124,6 +124,8 @@ STATIC_URL = '/static/'
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/login/'
 
+DEFAULT_TEXTAREA_SIZE = 255
+
 for f in ["settings_local.py"]:
     full = os.path.join(BASE_DIR, ".", f)
     if os.path.isfile(full):
