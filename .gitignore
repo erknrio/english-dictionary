@@ -2,3 +2,4 @@ virtualenv
 *pyc
 db.sqlite3
 __pychache__
+.idea
