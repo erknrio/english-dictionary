@@ -3,7 +3,7 @@
 {% block title %}- New Word{% endblock title %}
 
 {% block content %}
-<h1>New Word</h1>
+<h1>{{ header_text|default:"Word" }}</h1>
 <section class="pretty-top">
   {% if form.errors %}
   <div class="col s12 red-text">
