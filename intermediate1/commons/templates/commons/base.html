@@ -23,7 +23,7 @@
   <link rel="icon" sizes="512x512" href="{% static "commons/images/icons/icon-512x512.png" %}">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <!-- /Icons -->
-  <title>English Dictionary Intermediate 1{% block title %}{% endblock title %}</title>
+  <title>English Dictionary Intermediate 1 {% block title %}{% endblock title %}</title>
   <link rel="manifest" href="{% static "commons/manifest.json" %}">
   <!-- Plugins -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
@@ -34,27 +34,31 @@
   <!-- /Custom Styles -->
 </head>
 <body>
+  {% if user.is_authenticated %}
   <header>
     <nav class="light-blue lighten-1">
       <div class="nav-wrapper">
-        <a href="#!" class="brand-logo center">
+        <a href="{% url 'dashboard' %}" class="brand-logo center">
           <img src="{% static "commons/images/icons/icon-32x32.png" %}" class="circle responsive-img" alt="Logo" title="English Intermediate 1">
         </a>
         <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
         <ul class="hide-on-med-and-down">
           <li><a href="{% url 'words_list' %}">Words</a></li>
+          <li><a href="{% url 'logout' %}" class="right">Logout</a></li>
         </ul>
         <ul class="side-nav" id="mobile-demo">
           <li><a href="{% url 'words_list' %}">Words</a></li>
+          <li><a href="{% url 'logout' %}">Logout</a></li>
         </ul>
       </div>
     </nav>
   </header>
+  {% endif %}
   <main class="container">
     <section class="row">
       <div class="col s12">
         {% block content %}
-        <h1>HOLA MUNDO!!</h1>
+        <h1>HELLO WORLD!!</h1>
         {% endblock content %}
       </div>
     </section>

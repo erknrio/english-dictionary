@@ -82,7 +82,6 @@ DATABASES = {
     }
 }
 
-
 # Password validation
 # https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators
 
@@ -119,6 +118,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
+# STATIC_ROOT = '/opt/english-dictionary/intermediate1/.static/'
 STATIC_URL = '/static/'
 
 LOGIN_REDIRECT_URL = '/'
