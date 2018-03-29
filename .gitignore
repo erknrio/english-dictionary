@@ -3,7 +3,6 @@ virtualenv
 db.sqlite3
 __pychache__
 .idea
-intermediate1/intermediate1/settings.py
 settings.py
-**/settings.py
-intermediate1/.static/
+.static/
+settings_local.py
