@@ -40,9 +40,11 @@
               <a href="./update/{{ element.pk }}" class="orange-text">
                 <i class="material-icons">mode_edit</i>
               </a>
+              {% ifequal user.groups.all.0.name 'Teachers' %}
               <a href="./delete/{{ element.pk }}" class="red-text">
                 <i class="material-icons">delete</i>
               </a>
+              {% endifequal %}
             </td>
           </tr>
           {% endfor %}
