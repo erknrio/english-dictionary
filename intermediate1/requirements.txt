@@ -1,1 +1,5 @@
 django<2.1
+gunicorn
+# Renombrado, ahora contiene binary
+psycopg2-binary
+
