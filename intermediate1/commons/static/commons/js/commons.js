@@ -11,6 +11,7 @@
 
         $('.datatables').DataTable({
             responsive: true,
+            paging: false,
             dom: 'Bfrtip',
             buttons: [
                 { extend: 'excel', className: 'waves-effect btn' },
