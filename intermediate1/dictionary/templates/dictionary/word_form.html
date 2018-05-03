@@ -40,18 +40,16 @@
 {% block js_scripts %}
 <script>
   $(document).ready(function() {
-    function capitalize(capitalize) {
-      return capitalize.toLowerCase().replace(/\b\w/g, function(m) {
-        return m.toUpperCase();
-      });
+    function capitalizeFirstWord(text) {
+      return text.charAt(0).toUpperCase() + text.slice(1);
     }
 
     $("form").on("submit", function(ev) {
-      document.getElementById("id_english_word").value = capitalize(document.getElementById("id_english_word").value);
-      document.getElementById("id_spanish_word").value = capitalize(document.getElementById("id_spanish_word").value);
-      document.getElementById("id_spanish_pronunciation").value = capitalize(document.getElementById("id_spanish_pronunciation").value);
-      document.getElementById("id_phonetics").value = capitalize(document.getElementById("id_phonetics").value);
-      document.getElementById("id_notes").value = capitalize(document.getElementById("id_notes").value);
+      document.getElementById("id_english_word").value = capitalizeFirstWord(document.getElementById("id_english_word").value);
+      document.getElementById("id_spanish_word").value = capitalizeFirstWord(document.getElementById("id_spanish_word").value);
+      document.getElementById("id_spanish_pronunciation").value = capitalizeFirstWord(document.getElementById("id_spanish_pronunciation").value);
+      document.getElementById("id_phonetics").value = capitalizeFirstWord(document.getElementById("id_phonetics").value);
+      document.getElementById("id_notes").value = capitalizeFirstWord(document.getElementById("id_notes").value);
     });
   });
 </script>
