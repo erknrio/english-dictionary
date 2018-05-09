@@ -32,8 +32,13 @@
             <td>{{ element.spanish_pronunciation }}</td>
             <td>{{ element.phonetics }}</td>
             <td>{{ element.notes|truncatewords_html:8 }}</td>
-            <td>{{ element.category }}</td>
             <td>
+              {% for category in element.category.all %}
+                {{ category }}{% if not forloop.last %},{% endif %}
+              {% endfor %}
+            </td>
+            <td>
+                {# {{ element.category_set.all }} #}
               <a href="./detail/{{  element.pk  }}" class="green-text">
                 <i class="material-icons">visibility</i>
               </a>

@@ -15,7 +15,7 @@ class Word(models.Model):
     spanish_pronunciation = models.CharField(max_length=60, help_text="Ex. trável (puedes usar las tildes para acentuar donde se hace el énfasis en la pronunciación)", null=True, blank=True)
     phonetics = models.CharField(max_length=60, help_text="Ex. /ˈtræv(ə)l/. Get it on: https://www.macmillandictionary.com/", null=True, blank=True)
     notes = models.TextField(max_length=settings.DEFAULT_TEXTAREA_SIZE, help_text="Ex. Suele usarse como verbo, rara como sustantivo o adjetivo", null=True, blank=True)
-    category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    category = models.ManyToManyField(Category)
 
     def __str__(self):
         return 'Word({} - {})'.format(self.english_word, self.spanish_word)

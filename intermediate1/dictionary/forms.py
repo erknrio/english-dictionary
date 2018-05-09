@@ -1,4 +1,4 @@
-from django.forms import ModelForm, Select, Textarea, TextInput
+from django.forms import ModelForm, SelectMultiple, Textarea, TextInput
 from .models import Word, Category
 from django.conf import settings
 
@@ -16,7 +16,7 @@ class WordForm(ModelForm):
                 'class': 'materialize-textarea',
                 'data-length': settings.DEFAULT_TEXTAREA_SIZE,
             }),
-            'category': Select(),
+            'category': SelectMultiple(),
         }
 
 
