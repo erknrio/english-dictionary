@@ -7,7 +7,7 @@ rm -rf _autofixture
 echo -e "Done\n"
 echo "Create migrations and database. . ."
 source virtualenv/bin/activate
-./manage.py makemigrations interface
+./manage.py makemigrations dictionary
 ./manage.py migrate
 echo -e "Done\n"
 echo "Create superuser. . ."
