@@ -1,14 +1,32 @@
-# Views
+# Django
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
-# Models
-from .models import Word
-# Forms
-from .forms import WordForm
-# Extra
 from django.urls import reverse, reverse_lazy
+# Plugins
+from rest_framework import viewsets, permissions, mixins
+# Custom
+from .models import Word
+from .forms import WordForm
+from .serializers import *
 
+
+# ViewSets
+class WordViewSet(viewsets.ModelViewSet):
+    permission_classes = (permissions.IsAuthenticated,)
+    queryset = Word.objects.all()
+    serializer_class = WordSerializer
+
+
+class CategoryViewSet(mixins.CreateModelMixin,
+                    mixins.RetrieveModelMixin,
+                    mixins.ListModelMixin,
+                    viewsets.GenericViewSet):
+    # Si agregasemos mixins.DestroyModelMixin
+    # podriamos eliminar tambien.
+    permission_classes = (permissions.IsAuthenticated,)
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer
 
 # Word
 class WordList(ListView):
