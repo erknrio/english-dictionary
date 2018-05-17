@@ -14,10 +14,5 @@ echo -e "Done\n"
 echo "Start environment______________"
 source virtualenv/bin/activate
 echo -e "Done\n"
-echo "Install requirements.txt_______"
-if [ -s "requirements.txt" ]
-then
-   pip install -r requirements.txt
-fi
-echo -e "Done\n"
+echo "Install requirements manually (dev or prod)_______"
 echo "[Finish]"
