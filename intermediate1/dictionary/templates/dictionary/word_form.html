@@ -39,6 +39,56 @@
 
 {% block js_scripts %}
 <script>
+var myResponseFunction = function (data) {
+  $('#response').html('data: ' + JSON.stringify(data));
+};
+
+// Creamos la funcion y le agregamos el parametro callback
+// (ademas de otros que pueda necesitar)
+function myAJAXFunction(event) {
+    $.ajax({
+        method: 'POST',
+        url: '/echo/json/',
+        dataType: 'json',
+        data: {
+            json: JSON.stringify({
+                'foo': 'bar'
+            })
+        }
+    }).done(function(response) {
+      // Una vez se raliza la peticion devolvemos la respuesta
+      myResposeFunction(response);
+    }).fail(function (jqXHR, textStatus, errorThrown) {
+      window.console.error('Error ' + textStatus + ': ' + errorThrown);
+    });
+}
+
+// Invocamos a la funcion que hace la llamada AJAX y
+// le pasamos como parametro la funcion que gestionara la respuesta AJAX
+$('#button').on('click', myAJAXFunction);
+
+$.ajax({
+    "url": "your_url_here",
+    "method": "GET",
+    "data": $.param({}),
+    "dataType": "json",
+    "timeout": 30000 // 30 seconds
+}).done(function (response) {
+    try {
+        if (response.ok) {
+            window.console.log(response);
+        } else {
+            throw response.error;
+        }
+    } catch (err) {
+        window.alert("Error");
+        window.console.error('Error: ' + err);
+    }
+}).fail(function (jqXHR, textStatus, errorThrown) {
+    window.alert("Error");
+    window.console.error(textStatus + ': ' + errorThrown);
+});
+
   $(document).ready(function() {
     function capitalizeFirstWord(text) {
       return text.charAt(0).toUpperCase() + text.slice(1);
