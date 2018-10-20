@@ -1,8 +1,25 @@
 # English Dictionary
 English dictionary for students.
 
-# Intermediate 1 (I1)
-This project was generated with Django 2.0.
+## Features by word
+
+- English word.
+
+- Spanish translation.
+
+- How to pronounce (spanish like characters).
+
+- Phonetics (english pronuntiation).
+
+- Category (money, food, etc.).
+
+- Level (B1, C1, etc.).
+
+- Aditional notes.
+
+## Display features
+
+A table with all the words and search option.
 
 ## Prerequisites
 - Python 3.
