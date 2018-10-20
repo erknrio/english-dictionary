@@ -5,5 +5,5 @@ __pychache__
 .idea
 settings.py
 .static/
-settings_local.py
+intermediate1/settings_local.py
 .vscode

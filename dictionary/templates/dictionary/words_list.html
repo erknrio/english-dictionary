@@ -21,6 +21,7 @@
             <th>Phonetics</th>
             <th>Notes</th>
             <th>Category</th>
+            <th>Level</th>
             <th>Actions</th>
           </tr>
         </thead>
@@ -37,6 +38,7 @@
                 {{ category }}{% if not forloop.last %},{% endif %}
               {% endfor %}
             </td>
+            <td>{{ element.level }}</td>
             <td>
                 {# {{ element.category_set.all }} #}
               <a href="./detail/{{  element.pk  }}" class="green-text">

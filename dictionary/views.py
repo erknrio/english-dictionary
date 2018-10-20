@@ -14,7 +14,6 @@ from django.urls import reverse, reverse_lazy
 class WordList(ListView):
     model = Word
     template_name = 'dictionary/words_list.html'
-    # paginate_by = 10
 
 
 class WordDetail(DetailView):
