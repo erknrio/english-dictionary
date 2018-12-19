@@ -1,6 +1,14 @@
 #!/bin/bash
-echo "Delete old database and migrations. . ."
-rm db.sqlite3
+read -r -p "Do you want to delete the database? [Y/n]" response
+response=${response,,} # tolower
+echo    # (optional) move to a new line
+if [[ $response =~ ^[y|yes]$ ]]
+then
+    echo "Delete database. . ."
+    rm db.sqlite3
+    echo -e "Done\n"
+fi
+echo "Delete migrations. . ."
 rm -rf dictionary/migrations
 rm -rf dictionary/__pycache__
 rm -rf _autofixture

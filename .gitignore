@@ -1,9 +1,6 @@
 virtualenv
 *pyc
-db.sqlite3
 __pychache__
 .idea
-settings.py
 .static/
-intermediate1/settings_local.py
 .vscode
